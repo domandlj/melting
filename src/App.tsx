@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import {  Box, Container } from '@mui/material';
+import { Language, NavBarState } from './Types'; 
+import NavBar from './NavBar'; 
+import DataServices from './DataServices'; 
 
-function App() {
+
+
+const App: React.FC = () => {
+  const [selectedButton, setSelectedButton] = useState<NavBarState>('data');
+  const [showScrapingForm, setShowScrapingForm] = useState<boolean>(false);
+  const [language, setLanguage] = useState<Language>('ES'); 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box
+      sx={{
+        backgroundColor: 'black',
+        color: 'white',
+        minHeight: '100vh',
+        padding: '20px',
+      }}
+    >
+      {/* Top Navigation Bar */}
+      <NavBar
+        selectedButton={selectedButton}
+        setSelectedButton={setSelectedButton}
+        setShowScrapingForm={setShowScrapingForm}
+        language={language}
+        setLanguage={setLanguage}
+      />
+
+      {/* Main Content */}
+      <Container>
+        {/* Display content based on selected button */}
+        {selectedButton === 'data' && (
+          <DataServices   
+            language={language}
+            showScrapingForm={showScrapingForm}
+            setShowScrapingForm={setShowScrapingForm} 
+          />
+        )}
+      </Container>
+    </Box>
   );
-}
+};
 
 export default App;
